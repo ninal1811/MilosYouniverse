@@ -42,8 +42,10 @@ void Entity::ai_guard(Entity *player) {
         case WALKING:
             if (m_position.x > player->get_position().x) {
                 m_movement = glm::vec3(-1.0f, 0.0f, 0.0f);
+                m_animation_indices = m_walking[1];
             } else {
                 m_movement = glm::vec3(1.0f, 0.0f, 0.0f);
+                m_animation_indices = m_walking[0];
             }
             break;
             
@@ -165,6 +167,12 @@ void const Entity::check_collision_y(Entity *collidable_entities, int collidable
                     m_slime_counter += 1;
                 }
                 
+                if (collidable_entity->m_entity_type == BERRY) {
+                    collidable_entity->m_is_active = false;
+                    m_berry_counter += 1;
+                    
+                }
+                
             } else if (m_velocity.y < 0) {
                 m_position.y += y_overlap;
                 m_velocity.y = 0;
@@ -173,14 +181,12 @@ void const Entity::check_collision_y(Entity *collidable_entities, int collidable
                 if (collidable_entity->m_entity_type == EGG) {
                     collidable_entity->m_is_active = false;
                     m_egg_counter += 1;
-                    
                 }
                 
                 if (collidable_entity->m_entity_type == ENEMY) {
                     collidable_entity->m_is_active = false;
                     m_slime_counter += 1;
                 }
-                
             }
         }
     }

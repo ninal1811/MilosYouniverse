@@ -3,19 +3,19 @@
 
 #define LEVEL_WIDTH 10
 #define LEVEL_HEIGHT 10
-#define OBJECT_COUNT 3
+#define OBJECT_COUNT 13
 
 unsigned int LEVELA_DATA[] =
 {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 77, 1, 1, 1, 2, 0, 0,
-    0, 0, 77, 28, 12, 12, 12, 27, 2, 0,
-    0, 77, 28, 12, 12, 12, 12, 12, 13, 0,
+    0, 77, 1, 1, 1, 1, 1, 1, 2, 0,
     0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
     0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
-    0, 11, 12, 12, 12, 12, 12, 16, 24, 0,
-    0, 22, 17, 12, 12, 16, 23, 24, 0, 0,
-    0, 0, 22, 23, 23, 24, 0, 0, 0, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 22, 23, 23, 23, 23, 23, 23, 24, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
@@ -28,6 +28,7 @@ LevelA::~LevelA() {
 
 void LevelA::initialise() {
     m_game_state.next_scene_id = -1;
+    m_berry_counter = 0;
     
     GLuint map_texture_id = Utility::load_texture("assets/images/grass_tileset.png");
     m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVELA_DATA, map_texture_id, 1.0f, 11, 7);
@@ -45,7 +46,7 @@ void LevelA::initialise() {
     
     m_game_state.player = new Entity(
         player_texture_id,         // texture id
-        5.0f,                      // speed
+        2.0f,                      // speed
         glm::vec3(0.0f, 0.0f, 0.0f),              // acceleration
         player_walking_animation,  // animation index sets
         0.0f,                      // animation time
@@ -58,7 +59,7 @@ void LevelA::initialise() {
         PLAYER
     );
         
-    m_game_state.player->set_position(glm::vec3(3.75f, -1.5f, 0.0f));
+    m_game_state.player->set_position(glm::vec3(4.5f, -1.5f, 0.0f));
     
     m_game_state.object = new Entity[OBJECT_COUNT];
     
@@ -73,55 +74,119 @@ void LevelA::initialise() {
         CHICKENHOUSE
     );
     
-    m_game_state.object[0].set_position(glm::vec3(3.0f, -7.0f, 0.0f));
+    m_game_state.object[0].set_position(glm::vec3(7.0f, -7.0f, 0.0f));
     
-    // ————— CHICKEN ————— //
-    int chicken_walking_animation[2][4] =
-    {
-        { 0, 1, 0, 1 },  // first row (e.g., walking left)
-        { 4, 5, 6, 7 }   // down
-    };
+    // ————— BUSH ————— //
+    GLuint bush_texture_id = Utility::load_texture("assets/images/bush.png");
+    GLuint berry_texture_id = Utility::load_texture("assets/images/berry.png");
     
-    GLuint chicken_texture_id = Utility::load_texture("assets/images/chicken.png");
-    m_game_state.object[1] = Entity(
-        chicken_texture_id,         // texture id
-        2.0f,                      // speed
-        glm::vec3(0.0f, 0.0f, 0.0f),              // acceleration
-        player_walking_animation,  // animation index sets
-        0.0f,                      // animation time
-        4,                         // animation frame amount
-        0,                         // current animation index
-        4,                         // animation column amount
-        2,                         // animation row amount
-        0.125f,                      // width
-        0.125f,                       // height
-        CHICKEN
+    m_game_state.object[1] = Entity (
+        bush_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BUSH
     );
+    m_game_state.object[1].set_position(glm::vec3(6.6f, -1.3f, 0.0f));
     
-    m_game_state.object[1].set_walk(chicken_walking_animation);
-    m_game_state.object[1].set_position(glm::vec3(5.0f, -5.0f, 0.0f));
-    m_game_state.object[1].set_ai_type(WALKER);
-    m_game_state.object[1].set_ai_state(IDLE);
-    
-    m_game_state.object[2] = Entity(
-        chicken_texture_id,         // texture id
-        2.0f,                      // speed
-        glm::vec3(0.0f, 0.0f, 0.0f),              // acceleration
-        player_walking_animation,  // animation index sets
-        0.0f,                      // animation time
-        4,                         // animation frame amount
-        0,                         // current animation index
-        4,                         // animation column amount
-        2,                         // animation row amount
-        0.125f,                      // width
-        0.125f,                       // height
-        CHICKEN
+    m_game_state.object[2] = Entity (
+        bush_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BUSH
     );
+    m_game_state.object[2].set_position(glm::vec3(7.28f, -1.5f, 0.0f));
     
-    m_game_state.object[2].set_walk(chicken_walking_animation);
-    m_game_state.object[2].set_position(glm::vec3(5.0f, -3.0f, 0.0f));
-    m_game_state.object[2].set_ai_type(WALKER);
-    m_game_state.object[2].set_ai_state(IDLE);
+    m_game_state.object[3] = Entity (
+        bush_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BUSH
+    );
+    m_game_state.object[3].set_position(glm::vec3(6.74f, -1.75f, 0.0f));
+    
+    m_game_state.object[4] = Entity (
+        berry_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BERRY
+    );
+    m_game_state.object[4].set_position(glm::vec3(6.67f, -1.87f, 0.0f));
+    
+    m_game_state.object[5] = Entity (
+        berry_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BERRY
+    );
+    m_game_state.object[5].set_position(glm::vec3(7.40f, -1.57f, 0.0f));
+    
+    m_game_state.object[6] = Entity (
+        bush_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BUSH
+    );
+    m_game_state.object[6].set_position(glm::vec3(3.0f, -4.45f, 0.0f));
+    
+    m_game_state.object[7] = Entity (
+        bush_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BUSH
+    );
+    m_game_state.object[7].set_position(glm::vec3(3.65f, -4.8f, 0.0f));
+    
+    m_game_state.object[8] = Entity (
+        bush_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BUSH
+    );
+    m_game_state.object[8].set_position(glm::vec3(2.45f, -4.8f, 0.0f));
+    
+    m_game_state.object[9] = Entity (
+        bush_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BUSH
+    );
+    m_game_state.object[9].set_position(glm::vec3(3.0f, -5.2f, 0.0f));
+    
+    m_game_state.object[10] = Entity (
+        berry_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BERRY
+    );
+    m_game_state.object[10].set_position(glm::vec3(3.70f, -4.85f, 0.0f));
+    
+    m_game_state.object[11] = Entity (
+        berry_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BERRY
+    );
+    m_game_state.object[11].set_position(glm::vec3(2.30f, -4.85f, 0.0f));
+    
+    m_game_state.object[12] = Entity (
+        berry_texture_id,         // texture id
+        0.0f,                      // speed
+        0.75f,                      // width
+        0.75f,                       // height
+        BERRY
+    );
+    m_game_state.object[12].set_position(glm::vec3(3.0f, -5.25f, 0.0f));
 
     // ————— BGM + SFX ————— //
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
@@ -137,12 +202,35 @@ void LevelA::update(float delta_time) {
         m_game_state.object[i].update(delta_time, m_game_state.player, NULL, NULL, m_game_state.map);
     }
     
+    float min_x = 1.5f;
+    float max_x = 7.5f;
+    float min_y = -7.5f;
+    float max_y = -1.5f;
+    
+    glm::vec3 player_position = m_game_state.player->get_position();
+    
+    if (player_position.x < min_x) {
+        player_position.x = min_x;
+    } else if (player_position.x > max_x) {
+        player_position.x = max_x;
+    }
+    
+    if (player_position.y < min_y) {
+        player_position.y = min_y;
+    } else if (player_position.y > max_y) {
+        player_position.y = max_y;
+    }
+    
+    m_game_state.player->set_position(player_position);
+    
     if (abs(m_game_state.player->get_position().x - m_game_state.object[0].get_position().x) < 0.75f &&
         abs(m_game_state.player->get_position().y - m_game_state.object[0].get_position().y) < 0.75f) {
         m_game_state.next_scene_id = 2;
     }
     
     if (m_game_state.player->get_position().y < -20.0f) m_game_state.next_scene_id = 2;
+    
+    m_berry_counter = m_game_state.player->m_berry_counter;
 }
 
 void LevelA::render(ShaderProgram *program) {

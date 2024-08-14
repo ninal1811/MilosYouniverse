@@ -29,8 +29,8 @@ LevelB::~LevelB() {
 }
 
 void LevelB::initialise() {
-    
     m_game_state.next_scene_id = -1;
+    m_egg_counter = 0;
     
     GLuint map_texture_id = Utility::load_texture("assets/images/grass_tileset.png");
     m_game_state.map = new Map(LEVEL_WIDTH, LEVEL_HEIGHT, LEVELB_DATA, map_texture_id, 1.0f, 11, 7);
@@ -48,7 +48,7 @@ void LevelB::initialise() {
     
     m_game_state.player = new Entity(
         player_texture_id,         // texture id
-        5.0f,                      // speed
+        2.0f,                      // speed
         glm::vec3(0.0f, 0.0f, 0.0f),              // acceleration
         player_walking_animation,  // animation index sets
         0.0f,                      // animation time
@@ -169,8 +169,6 @@ void LevelB::initialise() {
     Mix_VolumeMusic(50.0f);
     
     m_game_state.collect_sfx = Mix_LoadWAV("assets/collect.wav");
-    
-    m_number_of_eggs = 0;
 }
 
 void LevelB::update(float delta_time) {
@@ -179,6 +177,22 @@ void LevelB::update(float delta_time) {
     for (int i = 0; i < OBJECT_COUNT; i++) {
         m_game_state.object[i].update(delta_time, m_game_state.player, NULL, NULL, m_game_state.map);
     }
+    
+    glm::vec3 player_position = m_game_state.player->get_position();
+    
+    if (player_position.x < min_x) {
+        player_position.x = min_x;
+    } else if (player_position.x > max_x) {
+        player_position.x = max_x;
+    }
+    
+    if (player_position.y < min_y) {
+        player_position.y = min_y;
+    } else if (player_position.y > max_y) {
+        player_position.y = max_y;
+    }
+    
+    m_game_state.player->set_position(player_position);
 
     if (abs(m_game_state.player->get_position().x - m_game_state.object[158].get_position().x) < 0.75f &&
         abs(m_game_state.player->get_position().y - m_game_state.object[158].get_position().y) < 0.75f) {
@@ -186,7 +200,8 @@ void LevelB::update(float delta_time) {
     }
     
     if (m_game_state.player->get_position().y < -20.0f) m_game_state.next_scene_id = 3;
-    m_number_of_eggs = m_game_state.player->m_egg_counter;
+    
+    m_egg_counter = m_game_state.player->m_egg_counter;
 }
 
 void LevelB::render(ShaderProgram *program) {

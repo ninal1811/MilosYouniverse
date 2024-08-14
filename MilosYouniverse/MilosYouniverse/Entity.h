@@ -4,7 +4,7 @@
 #include "Map.h"
 #include "glm/glm.hpp"
 #include "ShaderProgram.h"
-enum EntityType { PLATFORM, PLAYER, ENEMY, CHICKENHOUSE, FENCE, EGG, CHEST, CHICKEN, FINISH };
+enum EntityType { PLATFORM, PLAYER, ENEMY, CHICKENHOUSE, FENCE, EGG, CHEST, BUSH, BERRY, FINISH };
 enum AIType { WALKER, GUARD };
 enum AIState { WALKING, IDLE, ATTACKING };
 
@@ -56,6 +56,7 @@ private:
 public:
     // ————— STATIC VARIABLES ————— //
     static constexpr int SECONDS_PER_FRAME = 4;
+    int m_berry_counter = 0;
     int m_egg_counter = 0;
     int m_slime_counter = 0;
 
@@ -148,8 +149,8 @@ public:
         }
     }
     
-    void set_walk1(int walking[1][7]) {
-        for (int i = 0; i < 1; ++i) {
+    void set_walk1(int walking[2][7]) {
+        for (int i = 0; i < 2; ++i) {
             for (int j = 0; j < 7; ++j) {
                 m_walking[i][j] = walking[i][j];
             }

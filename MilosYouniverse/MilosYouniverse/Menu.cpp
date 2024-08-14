@@ -7,14 +7,14 @@
 unsigned int MENU_DATA[] = 
 {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 77, 1, 1, 1, 2, 0, 0,
-    0, 0, 77, 28, 12, 12, 12, 27, 2, 0,
-    0, 77, 28, 12, 12, 12, 12, 12, 13, 0,
+    0, 77, 1, 1, 1, 1, 1, 1, 2, 0,
     0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
     0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
-    0, 11, 12, 12, 12, 12, 12, 16, 24, 0,
-    0, 22, 17, 12, 12, 16, 23, 24, 0, 0,
-    0, 0, 22, 23, 23, 24, 0, 0, 0, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 22, 23, 23, 23, 23, 23, 23, 24, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
@@ -56,7 +56,7 @@ void Menu::initialise() {
         PLAYER
     );
         
-    m_game_state.player->set_position(glm::vec3(3.75f, -1.5f, 0.0f));
+    m_game_state.player->set_position(glm::vec3(4.5f, -1.5f, 0.0f));
     
     // ————— BGM + SFX ————— //
     Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 4096);
@@ -78,6 +78,6 @@ void Menu::render(ShaderProgram *program) {
     m_game_state.map->render(program);
     m_game_state.player->render(program);
     GLuint text_texture_id = Utility::load_texture("assets/font/font1.png");
-    Utility::draw_text(program, text_texture_id, "Milo's Youniverse", 0.5f, -0.1f, glm::vec3(0.6f, 1.0f, 0.0f));
-    Utility::draw_text(program, text_texture_id, "PRESS ENTER TO START", 0.5f, -0.1f, glm::vec3(0.1f, 0.0f, 0.0f));
+    Utility::draw_text(program, text_texture_id, "Milo's Youniverse", 0.5f, -0.1f, glm::vec3(1.35f, 1.0f, 0.0f));
+    Utility::draw_text(program, text_texture_id, "PRESS ENTER TO START", 0.5f, -0.1f, glm::vec3(0.75f, 0.0f, 0.0f));
 }

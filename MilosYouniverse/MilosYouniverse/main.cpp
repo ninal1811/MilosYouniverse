@@ -1,3 +1,13 @@
+/*
+* Author: Nina Li
+* Assignment: Milo's Youniverse
+* Date due: 2024-08-15, 1:00pm
+* I pledge that I have completed this assignment without
+* collaborating with anyone else, in conformance with the
+* NYU School of Engineering Policies and Procedures on
+* Academic Misconduct.
+*/
+
 #define GL_SILENCE_DEPRECATION
 #define GL_GLEXT_PROTOTYPES 1
 #define FIXED_TIMESTEP 0.0166666f
@@ -71,7 +81,6 @@ float g_previous_ticks = 0.0f;
 float g_accumulator = 0.0f;
 
 bool g_is_colliding_bottom = false;
-int g_egg_count = 0;
 
 AppStatus g_app_status = RUNNING;
 
@@ -86,8 +95,10 @@ void shutdown();
 void switch_to_scene(Scene *scene) {
     g_current_scene = scene;
     g_current_scene->initialise(); // DON'T FORGET THIS STEP!
+    
     if (scene == g_levelC){
-        g_levelC->m_number_of_eggs = g_levelB->m_number_of_eggs;
+        g_levelC->m_egg_counter = g_levelB->m_egg_counter;
+        g_levelC->m_berry_counter = g_levelA->m_berry_counter;
     }
 }
 
@@ -292,7 +303,6 @@ int main(int argc, char* argv[]) {
         } else {
             render();
         }
-        
     }
     
     shutdown();

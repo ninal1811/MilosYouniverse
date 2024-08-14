@@ -43,8 +43,14 @@ public:
     // ————— ATTRIBUTES ————— //
     int m_number_of_enemies = 1;
     bool m_game_over = false;
-    int m_number_of_eggs;
+    int m_berry_counter;
+    int m_egg_counter;
     bool m_space_pressed;
+    
+    float min_x = 0.5f;
+    float max_x = 8.5f;
+    float min_y = -8.5f;
+    float max_y = -0.5f;
     
     // ————— METHODS ————— //
     virtual void initialise() = 0;

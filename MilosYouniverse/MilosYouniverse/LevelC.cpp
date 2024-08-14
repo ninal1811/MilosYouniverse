@@ -8,14 +8,14 @@
 unsigned int LEVELC_DATA[] =
 {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 77, 1, 1, 1, 2, 0, 0,
-    0, 0, 77, 28, 12, 12, 12, 27, 2, 0,
-    0, 77, 28, 12, 12, 12, 12, 12, 13, 0,
+    0, 77, 1, 1, 1, 1, 1, 1, 2, 0,
     0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
     0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
-    0, 11, 12, 12, 12, 12, 12, 16, 24, 0,
-    0, 22, 17, 12, 12, 16, 23, 24, 0, 0,
-    0, 0, 22, 23, 23, 24, 0, 0, 0, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 11, 12, 12, 12, 12, 12, 12, 13, 0,
+    0, 22, 23, 23, 23, 23, 23, 23, 24, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
@@ -46,7 +46,7 @@ void LevelC::initialise() {
     
     m_game_state.player = new Entity(
         player_texture_id,         // texture id
-        5.0f,                      // speed
+        2.0f,                      // speed
         glm::vec3(0.0f, 0.0f, 0.0f),              // acceleration
         player_walking_animation,  // animation index sets
         0.0f,                      // animation time
@@ -59,7 +59,7 @@ void LevelC::initialise() {
         PLAYER
     );
         
-    m_game_state.player->set_position(glm::vec3(3.75f, -1.5f, 0.0f));
+    m_game_state.player->set_position(glm::vec3(1.0f, -1.0f, 0.0f));
     
     m_game_state.object = new Entity[OBJECT_COUNT];
     
@@ -73,16 +73,17 @@ void LevelC::initialise() {
        FINISH
     );
     
-    m_game_state.object[0].set_position(glm::vec3(3.5f, -7.5f, 0.0f));
+    m_game_state.object[0].set_position(glm::vec3(7.25f, -7.25f, 0.0f));
     
     // ————— SLIMES ————— //
     GLint pslime_texture_id = Utility::load_texture("assets/images/pslime.png");
     GLint gslime_texture_id = Utility::load_texture("assets/images/gslime.png");
     GLint bslime_texture_id = Utility::load_texture("assets/images/bslime.png");
     
-    int slime_walking_animation[1][7] =
+    int slime_walking_animation[2][7] =
     {
-        { 0, 1, 2, 3, 4, 5, 6 }
+        { 0, 1, 2, 3, 4, 5, 6 },
+        { 7, 8, 9, 10, 11, 12, 13 }
     };
     
     m_game_state.object[1] = Entity(
@@ -94,56 +95,56 @@ void LevelC::initialise() {
         7,                        // animation frame amount
         0,                        // current animation index
         7,                        // animation column amount
-        1,                        // animation row amount
+        2,                        // animation row amount
         0.5f,                     // width
         0.5f,                     // height
         ENEMY                    // type
     );
 
     m_game_state.object[1].set_walk1(slime_walking_animation);
-    m_game_state.object[1].set_position(glm::vec3(5.0f, -2.5f, 0.0f));
+    m_game_state.object[1].set_position(glm::vec3(7.0f, -4.5f, 0.0f));
     m_game_state.object[1].set_entity_type(ENEMY);
     m_game_state.object[1].set_ai_type(GUARD);
     m_game_state.object[1].set_ai_state(IDLE);
     
     m_game_state.object[2] = Entity(
         gslime_texture_id,         // texture id
-        1.0f,                     // speed
+        1.25f,                     // speed
         glm::vec3(0.0f, 0.0f, 0.0f),              // acceleration
         player_walking_animation,  // animation index sets
         0.0f,                     // animation time
         7,                        // animation frame amount
         0,                        // current animation index
         7,                        // animation column amount
-        1,                        // animation row amount
+        2,                        // animation row amount
         0.5f,                     // width
         0.5f,                     // height
         ENEMY                    // type
     );
 
     m_game_state.object[2].set_walk1(slime_walking_animation);
-    m_game_state.object[2].set_position(glm::vec3(3.0f, -4.0f, 0.0f));
+    m_game_state.object[2].set_position(glm::vec3(4.0f, -7.0f, 0.0f));
     m_game_state.object[2].set_entity_type(ENEMY);
     m_game_state.object[2].set_ai_type(GUARD);
     m_game_state.object[2].set_ai_state(IDLE);
     
     m_game_state.object[3] = Entity(
         bslime_texture_id,         // texture id
-        1.0f,                     // speed
+        1.5f,                     // speed
         glm::vec3(0.0f, 0.0f, 0.0f),              // acceleration
         player_walking_animation,  // animation index sets
         0.0f,                     // animation time
         7,                        // animation frame amount
         0,                        // current animation index
         7,                        // animation column amount
-        1,                        // animation row amount
+        2,                        // animation row amount
         0.5f,                     // width
         0.5f,                     // height
         ENEMY                    // type
     );
 
     m_game_state.object[3].set_walk1(slime_walking_animation);
-    m_game_state.object[3].set_position(glm::vec3(6.0f, -5.5f, 0.0f));
+    m_game_state.object[3].set_position(glm::vec3(2.0f, -2.5f, 0.0f));
     m_game_state.object[3].set_entity_type(ENEMY);
     m_game_state.object[3].set_ai_type(GUARD);
     m_game_state.object[3].set_ai_state(IDLE);
@@ -164,6 +165,27 @@ void LevelC::update(float delta_time) {
         m_game_state.object[i].update(delta_time, m_game_state.player, NULL, NULL, m_game_state.map);
     }
     
+    float min_x = 1.5f;
+    float max_x = 7.5f;
+    float min_y = -7.5f;
+    float max_y = -1.5f;
+    
+    glm::vec3 player_position = m_game_state.player->get_position();
+    
+    if (player_position.x < min_x) {
+        player_position.x = min_x;
+    } else if (player_position.x > max_x) {
+        player_position.x = max_x;
+    }
+    
+    if (player_position.y < min_y) {
+        player_position.y = min_y;
+    } else if (player_position.y > max_y) {
+        player_position.y = max_y;
+    }
+    
+    m_game_state.player->set_position(player_position);
+    
     const Uint8 *keys = SDL_GetKeyboardState(NULL);
     if (keys[SDL_SCANCODE_SPACE]) {
         m_space_pressed = true;
@@ -182,19 +204,25 @@ void LevelC::render(ShaderProgram *program) {
     GLuint text_texture_id = Utility::load_texture("assets/font/font1.png");
     m_game_state.map->render(program);
     m_game_state.player->render(program);
+    
     for (int i = 0; i < OBJECT_COUNT; i++) {
         m_game_state.object[i].render(program);
     }
     
-    std::cout << "egg count: " << m_number_of_eggs << std::endl;
+    std::cout << "berry count: " << m_berry_counter << std::endl;
+    std::cout << "egg count: " << m_egg_counter << std::endl;
     std::cout << "slime count: " << m_game_state.player->m_slime_counter << std::endl;
     
     if (m_game_over) {
-        if (m_number_of_eggs != 5 && m_game_state.player->m_slime_counter != 3) {
-            Utility::draw_text(program, text_texture_id, "YOU LOSE!", 0.5f, -0.1f, glm::vec3(m_game_state.player->get_position().x - 1.0f, m_game_state.player->get_position().y + 1.0f, 0.0f));
-        } else {
-            Utility::draw_text(program, text_texture_id, "YOU WIN!", 0.5f, -0.1f, glm::vec3(m_game_state.player->get_position().x - 1.0f, m_game_state.player->get_position().y + 1.0f, 0.0f));
+        if (m_berry_counter == 5 && m_egg_counter == 5 && m_game_state.player->m_slime_counter == 3) {
+            Utility::draw_text(program, text_texture_id, "YOU WIN!", 0.5f, -0.1f, 
+                               glm::vec3(m_game_state.player->get_position().x - 1.25f, 
+                                         m_game_state.player->get_position().y - 1.5f, 0.0f));
             Mix_PlayChannel(-1, m_game_state.win_sfx, 0);
+        } else {
+            Utility::draw_text(program, text_texture_id, "YOU LOSE!", 0.5f, -0.1f, 
+                               glm::vec3(m_game_state.player->get_position().x - 1.25f, 
+                                         m_game_state.player->get_position().y - 1.5f, 0.0f));
         }
     }
 }
