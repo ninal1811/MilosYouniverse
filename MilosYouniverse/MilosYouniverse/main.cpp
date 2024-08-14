@@ -71,7 +71,6 @@ float g_previous_ticks = 0.0f;
 float g_accumulator = 0.0f;
 
 bool g_is_colliding_bottom = false;
-
 int g_egg_count = 0;
 
 AppStatus g_app_status = RUNNING;
@@ -89,7 +88,6 @@ void switch_to_scene(Scene *scene) {
     g_current_scene->initialise(); // DON'T FORGET THIS STEP!
     if (scene == g_levelC){
         g_levelC->m_number_of_eggs = g_levelB->m_number_of_eggs;
-        std::cout << g_levelC->m_number_of_eggs << std::endl;
     }
 }
 
@@ -196,7 +194,6 @@ void process_input() {
 }
 
 void update() {
-    //g_levelB.m_number_of_eggs = g_egg_count;
     float ticks = (float) SDL_GetTicks() / MILLISECONDS_IN_SECOND;
     float delta_time = ticks - g_previous_ticks;
     g_previous_ticks = ticks;
@@ -289,10 +286,10 @@ int main(int argc, char* argv[]) {
         
         if (g_current_scene->get_state().next_scene_id >= 0) 
             switch_to_scene(g_levels[g_current_scene->get_state().next_scene_id]);
+        
         if (g_current_scene == g_levelB) {
             render2();
-        }
-        else{
+        } else {
             render();
         }
         

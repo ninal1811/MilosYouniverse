@@ -29,6 +29,7 @@ struct GameState {
     // ————— AUDIO ————— //
     Mix_Music *bgm;
     Mix_Chunk *collect_sfx;
+    Mix_Chunk *win_sfx;
     
     // ————— POINTERS TO OTHER SCENES ————— //
     int next_scene_id;
@@ -43,6 +44,7 @@ public:
     int m_number_of_enemies = 1;
     bool m_game_over = false;
     int m_number_of_eggs;
+    bool m_space_pressed;
     
     // ————— METHODS ————— //
     virtual void initialise() = 0;

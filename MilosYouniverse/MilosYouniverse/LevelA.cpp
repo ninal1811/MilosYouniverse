@@ -128,7 +128,7 @@ void LevelA::initialise() {
     
     m_game_state.bgm = Mix_LoadMUS("assets/audio/morning.mp3");
     Mix_PlayMusic(m_game_state.bgm, -1);
-    Mix_VolumeMusic(0.0f);
+    Mix_VolumeMusic(50.0f);
 }
 
 void LevelA::update(float delta_time) {
@@ -139,7 +139,7 @@ void LevelA::update(float delta_time) {
     
     if (abs(m_game_state.player->get_position().x - m_game_state.object[0].get_position().x) < 0.75f &&
         abs(m_game_state.player->get_position().y - m_game_state.object[0].get_position().y) < 0.75f) {
-        m_game_state.next_scene_id = 3;
+        m_game_state.next_scene_id = 2;
     }
     
     if (m_game_state.player->get_position().y < -20.0f) m_game_state.next_scene_id = 2;

@@ -57,6 +57,7 @@ public:
     // ————— STATIC VARIABLES ————— //
     static constexpr int SECONDS_PER_FRAME = 4;
     int m_egg_counter = 0;
+    int m_slime_counter = 0;
 
     // ————— METHODS ————— //
     Entity();
@@ -147,8 +148,8 @@ public:
         }
     }
     
-    void set_walk1(int walking[7][7]) {
-        for (int i = 0; i < 7; ++i) {
+    void set_walk1(int walking[1][7]) {
+        for (int i = 0; i < 1; ++i) {
             for (int j = 0; j < 7; ++j) {
                 m_walking[i][j] = walking[i][j];
             }
