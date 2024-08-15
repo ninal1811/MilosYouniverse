@@ -80,4 +80,10 @@ void Menu::render(ShaderProgram *program) {
     GLuint text_texture_id = Utility::load_texture("assets/font/font1.png");
     Utility::draw_text(program, text_texture_id, "Milo's Youniverse", 0.5f, -0.1f, glm::vec3(1.35f, 1.0f, 0.0f));
     Utility::draw_text(program, text_texture_id, "PRESS ENTER TO START", 0.5f, -0.1f, glm::vec3(0.75f, 0.0f, 0.0f));
+    Utility::draw_text(program, text_texture_id, "Your goal is", 0.5f, 0.0f, glm::vec3(1.75f, -2.0f, 0.0f));
+    Utility::draw_text(program, text_texture_id, "to collect", 0.5f, 0.0f, glm::vec3(2.25f, -2.5f, 0.0f));
+    Utility::draw_text(program, text_texture_id, "5 berries", 0.5f, 0.0f, glm::vec3(2.5f, -3.0f, 0.0f));
+    Utility::draw_text(program, text_texture_id, "5 eggs,", 0.5f, 0.0f, glm::vec3(3.25f, -3.5f, 0.0f));
+    Utility::draw_text(program, text_texture_id, "and defeat ", 0.5f, 0.0f, glm::vec3(2.5f, -4.0f, 0.0f));
+    Utility::draw_text(program, text_texture_id, "5 slimes", 0.5f, 0.0f, glm::vec3(2.75f, -4.5f, 0.0f));
 }

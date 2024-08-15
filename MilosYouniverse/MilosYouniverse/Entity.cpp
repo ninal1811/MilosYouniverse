@@ -35,7 +35,7 @@ void Entity::ai_walk() {
 void Entity::ai_guard(Entity *player) {
     switch (m_ai_state) {
         case IDLE:
-            if (glm::distance(m_position, player->get_position()) < 3.0f) 
+            if (glm::distance(m_position, player->get_position()) < 3.0f)
                 m_ai_state = WALKING;
             break;
             
@@ -63,7 +63,7 @@ Entity::Entity() : m_position(0.0f), m_movement(0.0f), m_scale(1.0f, 1.0f, 0.0f)
 {
     // Initialize m_walking with zeros or any default value
     for (int i = 0; i < SECONDS_PER_FRAME; ++i)
-        for (int j = 0; j < SECONDS_PER_FRAME; ++j) 
+        for (int j = 0; j < SECONDS_PER_FRAME; ++j)
             m_walking[i][j] = 0;
 }
 
@@ -84,7 +84,7 @@ Entity::Entity(GLuint texture_id, float speed,  float width, float height, Entit
 {
     // Initialize m_walking with zeros or any default value
     for (int i = 0; i < SECONDS_PER_FRAME; ++i)
-        for (int j = 0; j < SECONDS_PER_FRAME; ++j) 
+        for (int j = 0; j < SECONDS_PER_FRAME; ++j)
             m_walking[i][j] = 0;
 }
 
@@ -93,7 +93,7 @@ Entity::Entity(GLuint texture_id, float speed, float width, float height, Entity
 {
 // Initialize m_walking with zeros or any default value
     for (int i = 0; i < SECONDS_PER_FRAME; ++i)
-        for (int j = 0; j < SECONDS_PER_FRAME; ++j) 
+        for (int j = 0; j < SECONDS_PER_FRAME; ++j)
             m_walking[i][j] = 0;
 }
 
@@ -163,10 +163,10 @@ void const Entity::check_collision_y(Entity *collidable_entities, int collidable
                     m_egg_counter += 1;
                 }
                 
-                if (collidable_entity->m_entity_type == ENEMY) {
-                    collidable_entity->m_is_active = false;
-                    m_slime_counter += 1;
-                }
+//                if (collidable_entity->m_entity_type == ENEMY) {
+//                    collidable_entity->m_is_active = false;
+//                    m_slime_counter += 1;
+//                }
                 
                 if (collidable_entity->m_entity_type == BERRY) {
                     collidable_entity->m_is_active = false;
@@ -185,10 +185,10 @@ void const Entity::check_collision_y(Entity *collidable_entities, int collidable
                     m_egg_counter += 1;
                 }
                 
-                if (collidable_entity->m_entity_type == ENEMY) {
-                    collidable_entity->m_is_active = false;
-                    m_slime_counter += 1;
-                }
+//                if (collidable_entity->m_entity_type == ENEMY) {
+//                    collidable_entity->m_is_active = false;
+//                    m_slime_counter += 1;
+//                }
             }
         }
     }
@@ -208,6 +208,7 @@ void const Entity::check_collision_x(Entity *collidable_entities, int collidable
                 
                 if (collidable_entity->m_entity_type == EGG) {
                     collidable_entity->m_is_active = false;
+                    collidable_entity->set_collect(true);
                     m_egg_counter += 1;
                 }
                 
@@ -222,6 +223,7 @@ void const Entity::check_collision_x(Entity *collidable_entities, int collidable
                 
                 if (collidable_entity->m_entity_type == EGG) {
                     collidable_entity->m_is_active = false;
+                    collidable_entity->set_collect(true);
                     m_egg_counter += 1;
                 }
                 
