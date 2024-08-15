@@ -30,6 +30,7 @@ struct GameState {
     Mix_Music *bgm;
     Mix_Chunk *collect_sfx;
     Mix_Chunk *win_sfx;
+    Mix_Chunk *picking_berry_sfx;
     
     // ————— POINTERS TO OTHER SCENES ————— //
     int next_scene_id;
@@ -45,7 +46,7 @@ public:
     bool m_game_over = false;
     int m_berry_counter;
     int m_egg_counter;
-    bool m_space_pressed;
+    bool win_played = false;
     
     float min_x = 0.5f;
     float max_x = 8.5f;

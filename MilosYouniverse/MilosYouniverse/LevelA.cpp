@@ -24,6 +24,7 @@ LevelA::~LevelA() {
     delete [] m_game_state.object;
     delete m_game_state.map;
     Mix_FreeMusic(m_game_state.bgm);
+    Mix_FreeChunk(m_game_state.picking_berry_sfx);
 }
 
 void LevelA::initialise() {
@@ -194,6 +195,7 @@ void LevelA::initialise() {
     m_game_state.bgm = Mix_LoadMUS("assets/audio/morning.mp3");
     Mix_PlayMusic(m_game_state.bgm, -1);
     Mix_VolumeMusic(50.0f);
+    m_game_state.picking_berry_sfx = Mix_LoadWAV("assets/audio/picking_berry.wav");
 }
 
 void LevelA::update(float delta_time) {
@@ -222,6 +224,16 @@ void LevelA::update(float delta_time) {
     }
     
     m_game_state.player->set_position(player_position);
+    
+    for (int i = 0; i < OBJECT_COUNT; i++) {
+        if (m_game_state.object[i].get_entity_type() == BERRY) {
+            if (m_game_state.object[i].collect) {
+                m_game_state.object[i].collect = false;
+                Mix_PlayChannel(-1, m_game_state.picking_berry_sfx, 0);
+                Mix_Volume(-1, 50);
+            }
+        }
+    }
     
     if (abs(m_game_state.player->get_position().x - m_game_state.object[0].get_position().x) < 0.75f &&
         abs(m_game_state.player->get_position().y - m_game_state.object[0].get_position().y) < 0.75f) {

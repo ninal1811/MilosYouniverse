@@ -59,6 +59,7 @@ public:
     int m_berry_counter = 0;
     int m_egg_counter = 0;
     int m_slime_counter = 0;
+    bool collect = false;
 
     // ————— METHODS ————— //
     Entity();
@@ -112,6 +113,9 @@ public:
     
     void activate() { m_is_active = true; };
     void deactivate() { m_is_active = false; };
+    
+    bool get_collect() const { return collect; }
+    void set_collect(bool value) { collect = value; }
     
     // ————— SETTERS ————— //
     void const set_entity_type(EntityType new_entity_type)  { m_entity_type = new_entity_type; };

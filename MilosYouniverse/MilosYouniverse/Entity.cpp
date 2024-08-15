@@ -159,6 +159,7 @@ void const Entity::check_collision_y(Entity *collidable_entities, int collidable
                 
                 if (collidable_entity->m_entity_type == EGG) {
                     collidable_entity->m_is_active = false;
+                    collidable_entity->set_collect(true);
                     m_egg_counter += 1;
                 }
                 
@@ -169,8 +170,8 @@ void const Entity::check_collision_y(Entity *collidable_entities, int collidable
                 
                 if (collidable_entity->m_entity_type == BERRY) {
                     collidable_entity->m_is_active = false;
+                    collidable_entity->set_collect(true);
                     m_berry_counter += 1;
-                    
                 }
                 
             } else if (m_velocity.y < 0) {
@@ -180,6 +181,7 @@ void const Entity::check_collision_y(Entity *collidable_entities, int collidable
                 
                 if (collidable_entity->m_entity_type == EGG) {
                     collidable_entity->m_is_active = false;
+                    collidable_entity->set_collect(true);
                     m_egg_counter += 1;
                 }
                 

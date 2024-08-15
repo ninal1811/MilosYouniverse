@@ -156,7 +156,7 @@ void LevelC::initialise() {
     Mix_PlayMusic(m_game_state.bgm, -1);
     Mix_VolumeMusic(50.0f);
     
-    m_game_state.win_sfx = Mix_LoadWAV("assets/win.wav");
+    m_game_state.win_sfx = Mix_LoadWAV("assets/audio/win.wav");
 }
 
 void LevelC::update(float delta_time) {
@@ -186,13 +186,6 @@ void LevelC::update(float delta_time) {
     
     m_game_state.player->set_position(player_position);
     
-    const Uint8 *keys = SDL_GetKeyboardState(NULL);
-    if (keys[SDL_SCANCODE_SPACE]) {
-        m_space_pressed = true;
-    } else {
-        m_space_pressed = false;
-    }
-    
     if (abs(m_game_state.player->get_position().x - m_game_state.object[0].get_position().x) < 0.40f &&
         abs(m_game_state.player->get_position().y - m_game_state.object[0].get_position().y) < 0.40f) {
         m_game_over = true;
@@ -215,10 +208,15 @@ void LevelC::render(ShaderProgram *program) {
     
     if (m_game_over) {
         if (m_berry_counter == 5 && m_egg_counter == 5 && m_game_state.player->m_slime_counter == 3) {
-            Utility::draw_text(program, text_texture_id, "YOU WIN!", 0.5f, -0.1f, 
+            if (!win_played) {
+                Mix_PlayChannel(-1, m_game_state.win_sfx, 0);
+                Mix_Volume(-1, 50);
+                win_played = true;
+            }
+            
+            Utility::draw_text(program, text_texture_id, "YOU WIN!", 0.5f, -0.1f,
                                glm::vec3(m_game_state.player->get_position().x - 1.25f, 
                                          m_game_state.player->get_position().y - 1.5f, 0.0f));
-            Mix_PlayChannel(-1, m_game_state.win_sfx, 0);
         } else {
             Utility::draw_text(program, text_texture_id, "YOU LOSE!", 0.5f, -0.1f, 
                                glm::vec3(m_game_state.player->get_position().x - 1.25f, 
